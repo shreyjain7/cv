@@ -263,6 +263,35 @@
   .ia-card .ia-tag{font-family:var(--mono); font-size:0.68rem; color:var(--amber); letter-spacing:0.08em;}
   .ia-card .ia-range{font-family:var(--display); font-size:1.05rem; font-weight:600; margin-top:0.4rem;}
 
+  .cal-group{margin-bottom:2.2rem;}
+  .cal-group h4{
+    font-family:var(--mono); font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--text-faint); margin-bottom:0.8rem; padding-bottom:0.5rem; border-bottom:1px solid var(--border-soft);
+  }
+  .cal-row{
+    display:grid; grid-template-columns:6.5rem auto 1fr; gap:0.9rem; align-items:baseline;
+    padding:0.55rem 0; border-bottom:1px solid var(--border-soft);
+  }
+  .cal-row:last-child{border-bottom:none;}
+  .cal-date{font-family:var(--mono); font-size:0.72rem; color:var(--cyan);}
+  .cal-tag{
+    font-family:var(--mono); font-size:0.6rem; letter-spacing:0.05em; text-transform:uppercase;
+    padding:0.12rem 0.45rem; border-radius:5px; white-space:nowrap; align-self:start;
+  }
+  .cal-tag.holiday{background:rgba(251,191,36,0.12); color:var(--amber);}
+  .cal-tag.exam{background:rgba(94,234,212,0.12); color:var(--cyan);}
+  .cal-tag.milestone{background:rgba(255,255,255,0.06); color:var(--text-muted);}
+  .cal-label{font-size:0.9rem; color:var(--text-muted);}
+  .cal-row.next .cal-label{color:var(--text);}
+  .cal-row.next .cal-date::after{
+    content:'NEXT'; margin-left:0.5rem; font-size:0.58rem; color:var(--amber);
+    animation:pulse 2s infinite;
+  }
+  @media (max-width:560px){
+    .cal-row{grid-template-columns:1fr; gap:0.3rem;}
+  }
+  .cal-foot{font-family:var(--mono); font-size:0.65rem; color:var(--text-faint); margin-top:0.5rem;}
+
   .attendance-head{display:flex; align-items:baseline; justify-content:space-between; gap:1rem; margin-bottom:1.2rem; flex-wrap:wrap;}
   .attendance-head h3{font-family:var(--display); font-size:1.1rem; font-weight:600;}
   .att-hint{font-family:var(--mono); font-size:0.68rem; color:var(--text-faint);}
@@ -573,6 +602,36 @@
     </div>
   </div>
 
+  <div class="section-head reveal" style="margin-top:1rem;">
+    <h2 style="font-size:1.3rem;">Academic calendar</h2>
+    <span class="eyebrow">MIT Manipal, AY 2026-27</span>
+  </div>
+
+  <div class="cal-group reveal">
+    <h4>Odd Semester — Jul – Dec 2026</h4>
+    <div class="cal-row" data-date="2026-07-24"><span class="cal-date">24 Jul</span><span class="cal-tag milestone">Milestone</span><span class="cal-label">I / V / VII Semester B.Tech classes start</span></div>
+    <div class="cal-row" data-date="2026-08-15"><span class="cal-date">15 Aug</span><span class="cal-tag holiday">Holiday</span><span class="cal-label">Independence Day</span></div>
+    <div class="cal-row" data-date="2026-09-05"><span class="cal-date">5 Sep</span><span class="cal-tag holiday">Holiday</span><span class="cal-label">Krishna Janmashtami</span></div>
+    <div class="cal-row" data-date="2026-09-14"><span class="cal-date">14 Sep</span><span class="cal-tag holiday">Holiday</span><span class="cal-label">Vinayaka Chathurthi</span></div>
+    <div class="cal-row" data-date="2026-10-02"><span class="cal-date">2 Oct</span><span class="cal-tag holiday">Holiday</span><span class="cal-label">Gandhi Jayanti</span></div>
+    <div class="cal-row" data-date="2026-10-21"><span class="cal-date">21 Oct</span><span class="cal-tag holiday">Holiday</span><span class="cal-label">Vijayadashami</span></div>
+    <div class="cal-row" data-date="2026-11-09"><span class="cal-date">9 Nov</span><span class="cal-tag holiday">Holiday</span><span class="cal-label">Deepavali</span></div>
+    <div class="cal-row" data-date="2026-11-10"><span class="cal-date">10 Nov</span><span class="cal-tag milestone">Milestone</span><span class="cal-label">Last instructional day</span></div>
+    <div class="cal-row" data-date="2026-12-12"><span class="cal-date">12 Dec</span><span class="cal-tag exam">Exam</span><span class="cal-label">End Semester exams start</span></div>
+    <div class="cal-row" data-date="2026-12-25"><span class="cal-date">25 Dec</span><span class="cal-tag holiday">Holiday</span><span class="cal-label">Christmas</span></div>
+    <div class="cal-row" data-date="2026-12-28"><span class="cal-date">28 Dec</span><span class="cal-tag milestone">Milestone</span><span class="cal-label">Winter labs start</span></div>
+  </div>
+
+  <div class="cal-group reveal">
+    <h4>Even Semester — Jan – May 2027</h4>
+    <div class="cal-row" data-date="2027-01-05"><span class="cal-date">5 Jan</span><span class="cal-tag milestone">Milestone</span><span class="cal-label">Even semester classes / re-registration start</span></div>
+    <div class="cal-row" data-date="2027-01-26"><span class="cal-date">26 Jan</span><span class="cal-tag holiday">Holiday</span><span class="cal-label">Republic Day</span></div>
+    <div class="cal-row" data-date="2027-03-22"><span class="cal-date">22 Mar</span><span class="cal-tag holiday">Holiday</span><span class="cal-label">Holi</span></div>
+    <div class="cal-row" data-date="2027-03-26"><span class="cal-date">26 Mar</span><span class="cal-tag holiday">Holiday</span><span class="cal-label">Good Friday</span></div>
+    <div class="cal-row" data-date="2027-04-24"><span class="cal-date">24 Apr</span><span class="cal-tag exam">Exam</span><span class="cal-label">End Semester exams start</span></div>
+  </div>
+  <p class="cal-foot reveal">~ Subject to change as per MAHE circular. IA1–IA3 windows above cover VII-sem CSE internal assessments specifically.</p>
+
   <div class="attendance-head reveal">
     <h3>Attendance tracker</h3>
     <span class="att-hint">Tap after each class · saved to this device</span>
@@ -840,6 +899,20 @@
   });
 
   loadAttendance();
+
+  // mark next upcoming calendar date
+  (function markNextCalDate(){
+    const rows = Array.from(document.querySelectorAll('.cal-row[data-date]'));
+    const now = new Date();
+    let closest = null;
+    rows.forEach(r => {
+      const d = new Date(r.dataset.date + 'T00:00:00');
+      if(d >= now && (!closest || d < new Date(closest.dataset.date + 'T00:00:00'))){
+        closest = r;
+      }
+    });
+    if(closest) closest.classList.add('next');
+  })();
 </script>
 </body>
 </html>
