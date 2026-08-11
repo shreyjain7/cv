@@ -861,7 +861,39 @@
   }, {threshold:0.4});
   bars.forEach(b => barIO.observe(b));
 
-  // ---------- attendance tracker ----------
+  // mark next upcoming calendar date
+  (function markNextCalDate(){
+    const rows = Array.from(document.querySelectorAll('.cal-row[data-date]'));
+    const now = new Date();
+    let closest = null;
+    rows.forEach(r => {
+      const d = new Date(r.dataset.date + 'T00:00:00');
+      if(d >= now && (!closest || d < new Date(closest.dataset.date + 'T00:00:00'))){
+        closest = r;
+      }
+    });
+    if(closest) closest.classList.add('next');
+  })();
+</script>
+
+<!-- ---------- attendance tracker (Firebase Firestore, synced across devices) ---------- -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDDXINoI4W0AGfUDyFrIQVyY_oa-RkCrro",
+    authDomain: "shrey-8399e.firebaseapp.com",
+    projectId: "shrey-8399e",
+    storageBucket: "shrey-8399e.firebasestorage.app",
+    messagingSenderId: "105976867750",
+    appId: "1:105976867750:web:c3c85bdc3b96f95508bd67",
+    measurementId: "G-QXT6JJL12R"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
   const SUBJECTS = [
     {id:'math-modelling', name:'Mathematical Modelling', code:'AB5-313'},
     {id:'soft-computing', name:'Soft Computing', code:'AB5-311'},
@@ -875,29 +907,27 @@
   const attStatus = document.getElementById('attStatus');
   const attState = {}; // id -> {attended, total}
 
-  function storageKey(id){ return 'attendance:' + id; }
-
   async function loadAttendance(){
     attStatus.textContent = 'Loading saved attendance…';
-    for(const s of SUBJECTS){
-      try{
-        const res = await window.storage.get(storageKey(s.id), false);
-        attState[s.id] = res && res.value ? JSON.parse(res.value) : {attended:0, total:0};
-      }catch(e){
-        attState[s.id] = {attended:0, total:0};
+    try{
+      for(const s of SUBJECTS){
+        const snap = await getDoc(doc(db, 'attendance', s.id));
+        attState[s.id] = snap.exists() ? snap.data() : {attended:0, total:0};
       }
+      attStatus.textContent = '';
+    }catch(e){
+      SUBJECTS.forEach(s => { if(!attState[s.id]) attState[s.id] = {attended:0, total:0}; });
+      attStatus.textContent = 'Could not reach the database — showing zeros. Check your connection and reload.';
     }
-    attStatus.textContent = '';
     renderAttendance();
   }
 
   async function saveAttendance(id){
     try{
-      const res = await window.storage.set(storageKey(id), JSON.stringify(attState[id]), false);
-      if(!res){ attStatus.textContent = 'Could not save — try again.'; }
-      else{ attStatus.textContent = ''; }
+      await setDoc(doc(db, 'attendance', id), attState[id]);
+      attStatus.textContent = '';
     }catch(e){
-      attStatus.textContent = 'Could not save — check connection.';
+      attStatus.textContent = 'Could not sync that tap — check your connection.';
     }
   }
 
@@ -942,20 +972,6 @@
   });
 
   loadAttendance();
-
-  // mark next upcoming calendar date
-  (function markNextCalDate(){
-    const rows = Array.from(document.querySelectorAll('.cal-row[data-date]'));
-    const now = new Date();
-    let closest = null;
-    rows.forEach(r => {
-      const d = new Date(r.dataset.date + 'T00:00:00');
-      if(d >= now && (!closest || d < new Date(closest.dataset.date + 'T00:00:00'))){
-        closest = r;
-      }
-    });
-    if(closest) closest.classList.add('next');
-  })();
 </script>
 </body>
 </html>
