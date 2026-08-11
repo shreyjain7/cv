@@ -325,6 +325,20 @@
   }
   .cal-foot{font-family:var(--mono); font-size:0.65rem; color:var(--text-faint); margin-top:0.5rem;}
 
+  .auth-box{
+    background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
+    padding:1.1rem 1.3rem; margin-bottom:1.4rem;
+  }
+  .auth-row{display:flex; gap:0.6rem; flex-wrap:wrap; align-items:center;}
+  .auth-input{
+    font-family:var(--mono); font-size:0.8rem; background:var(--panel-2); color:var(--text);
+    border:1px solid var(--border); border-radius:7px; padding:0.55rem 0.8rem; flex:1; min-width:140px;
+  }
+  .auth-input:focus-visible{outline:2px solid var(--cyan); outline-offset:2px;}
+  .auth-signed-in{display:flex; align-items:center; gap:1rem; flex-wrap:wrap;}
+  .att-btn:disabled{opacity:0.35; cursor:not-allowed;}
+  .att-btn:disabled:hover{border-color:var(--border); color:var(--text-muted);}
+
   .attendance-head{display:flex; align-items:baseline; justify-content:space-between; gap:1rem; margin-bottom:1.2rem; flex-wrap:wrap;}
   .attendance-head h3{font-family:var(--display); font-size:1.1rem; font-weight:600;}
   .att-hint{font-family:var(--mono); font-size:0.68rem; color:var(--text-faint);}
@@ -677,8 +691,22 @@
 
   <div class="attendance-head reveal">
     <h3>Attendance tracker</h3>
-    <span class="att-hint">Tap after each class · saved to this device</span>
+    <span class="att-hint">Owner-only editing · counts are public</span>
   </div>
+
+  <div class="auth-box reveal" id="authBox">
+    <div class="auth-row" id="authForm">
+      <input type="email" id="authEmail" class="auth-input" placeholder="Owner email" autocomplete="username">
+      <input type="password" id="authPassword" class="auth-input" placeholder="Password" autocomplete="current-password">
+      <button class="att-btn" id="authSignIn" type="button">Sign in to edit</button>
+    </div>
+    <div class="auth-signed-in" id="authSignedIn" style="display:none;">
+      <span class="mono" style="font-size:0.72rem; color:var(--cyan);">● Signed in as owner</span>
+      <button class="att-btn reset" id="authSignOut" type="button">Sign out</button>
+    </div>
+    <p class="att-status" id="authStatus"></p>
+  </div>
+
   <div class="att-list reveal" id="attList">
     <!-- rows injected by JS -->
   </div>
@@ -880,6 +908,7 @@
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDDXINoI4W0AGfUDyFrIQVyY_oa-RkCrro",
@@ -893,6 +922,37 @@
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
+  const auth = getAuth(app);
+  const OWNER_UID = '2NtWmwmwC3g7ZwLFO6dmjhpk8qx1';
+  let isOwner = false;
+
+  const authForm = document.getElementById('authForm');
+  const authSignedIn = document.getElementById('authSignedIn');
+  const authStatus = document.getElementById('authStatus');
+  const authEmail = document.getElementById('authEmail');
+  const authPassword = document.getElementById('authPassword');
+
+  document.getElementById('authSignIn').addEventListener('click', async () => {
+    authStatus.textContent = 'Signing in…';
+    try{
+      await signInWithEmailAndPassword(auth, authEmail.value.trim(), authPassword.value);
+      authPassword.value = '';
+      authStatus.textContent = '';
+    }catch(e){
+      authStatus.textContent = 'Sign-in failed — check email and password.';
+    }
+  });
+
+  document.getElementById('authSignOut').addEventListener('click', async () => {
+    await signOut(auth);
+  });
+
+  onAuthStateChanged(auth, (user) => {
+    isOwner = !!user && user.uid === OWNER_UID;
+    authForm.style.display = isOwner ? 'none' : 'flex';
+    authSignedIn.style.display = isOwner ? 'flex' : 'none';
+    renderAttendance();
+  });
 
   const SUBJECTS = [
     {id:'math-modelling', name:'Mathematical Modelling', code:'AB5-313'},
@@ -948,9 +1008,9 @@
           <div class="cap"><span>${st.attended}/${st.total} held</span><span>${pct}%</span></div>
         </div>
         <div class="att-buttons">
-          <button class="att-btn present" data-id="${s.id}" data-action="present">Present</button>
-          <button class="att-btn absent" data-id="${s.id}" data-action="absent">Absent</button>
-          <button class="att-btn reset" data-id="${s.id}" data-action="reset" aria-label="Reset ${s.name} attendance">Reset</button>
+          <button class="att-btn present" data-id="${s.id}" data-action="present" ${isOwner ? '' : 'disabled title="Sign in as owner to edit"'}>Present</button>
+          <button class="att-btn absent" data-id="${s.id}" data-action="absent" ${isOwner ? '' : 'disabled title="Sign in as owner to edit"'}>Absent</button>
+          <button class="att-btn reset" data-id="${s.id}" data-action="reset" ${isOwner ? '' : 'disabled title="Sign in as owner to edit"'} aria-label="Reset ${s.name} attendance">Reset</button>
         </div>
       `;
       attList.appendChild(row);
@@ -959,7 +1019,8 @@
 
   attList.addEventListener('click', async (e) => {
     const btn = e.target.closest('.att-btn');
-    if(!btn) return;
+    if(!btn || btn.disabled) return;
+    if(!isOwner){ attStatus.textContent = 'Sign in as owner to edit attendance.'; return; }
     const id = btn.dataset.id;
     const action = btn.dataset.action;
     const st = attState[id] || {attended:0, total:0};
