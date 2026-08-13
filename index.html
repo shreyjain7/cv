@@ -443,6 +443,71 @@ footer{ margin-left:0; padding:150px 0 60px; }
 
 /* fade-in utility triggered by JS */
 .is-in{ opacity:1 !important; transform:none !important; }
+
+/* ============================================================
+   TIMETABLE
+   ============================================================ */
+.tt-scroll{ overflow-x:auto; border:1px solid var(--line); border-radius:14px; background:var(--panel); }
+table.tt{ border-collapse:collapse; width:100%; min-width:780px; font-size:13px; }
+table.tt th, table.tt td{ padding:13px 12px; text-align:center; border-bottom:1px solid var(--line); border-right:1px solid var(--line); white-space:nowrap; }
+table.tt th:last-child, table.tt td:last-child{ border-right:none; }
+table.tt tr:last-child td{ border-bottom:none; }
+table.tt thead th{ background:var(--bg-shift); color:var(--muted); font-family:var(--font-mono); font-weight:500; font-size:11px; text-transform:uppercase; letter-spacing:.05em; }
+table.tt .day-cell{ font-family:var(--font-mono); font-weight:600; background:var(--bg-shift); color:var(--ink); }
+table.tt .free{ color:var(--line-strong); }
+table.tt .break-col{ color:var(--muted); font-family:var(--font-mono); font-size:11px; background:rgba(0,0,0,0.015); }
+table.tt .has-class{ color:var(--ink); font-weight:500; }
+table.tt .has-class .code{ display:block; font-family:var(--font-mono); font-size:10.5px; color:var(--copper); font-weight:400; margin-top:3px; letter-spacing:.02em; }
+.tt-note{ font-family:var(--font-mono); font-size:12px; color:var(--muted); margin-top:16px; }
+
+.ia-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:32px; }
+@media (max-width:640px){ .ia-grid{ grid-template-columns:1fr; } }
+.ia-card{ background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:20px 24px; transition:all .3s var(--ease); }
+.ia-card:hover{ border-color:var(--moss); transform:translateY(-3px); box-shadow:var(--shadow-sm); }
+.ia-tag{ font-family:var(--font-mono); font-size:11px; color:var(--moss); font-weight:600; letter-spacing:.06em; text-transform:uppercase; margin-bottom:6px; }
+.ia-range{ font-family:var(--font-display); font-size:17px; color:var(--ink); }
+
+.cal-group{ margin-top:40px; }
+.cal-group h4{ font-family:var(--font-mono); font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:14px; font-weight:500; }
+.cal-row{ display:flex; align-items:center; gap:16px; padding:12px 0; border-bottom:1px solid var(--line); font-size:14px; border-radius:8px; }
+.cal-row:last-child{ border-bottom:none; }
+.cal-date{ width:64px; flex-shrink:0; font-family:var(--font-mono); font-size:12px; color:var(--muted); }
+.cal-tag{ font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:.05em; font-weight:600; padding:3px 9px; border-radius:5px; flex-shrink:0; }
+.cal-tag.milestone{ background:var(--moss-08); color:var(--moss-deep); }
+.cal-tag.holiday{ background:rgba(0,0,0,0.05); color:var(--muted); }
+.cal-tag.exam{ background:var(--copper-14); color:var(--copper); }
+.cal-label{ color:var(--ink-soft); }
+.cal-row.next{ background:var(--moss-08); margin:0 -14px; padding-left:14px; padding-right:14px; border-bottom-color:transparent; }
+.cal-row.next .cal-label{ color:var(--ink); font-weight:500; }
+.cal-foot{ font-family:var(--font-mono); font-size:11.5px; color:var(--muted); margin-top:20px; }
+
+.attendance-head{ display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-top:56px; margin-bottom:20px; }
+.attendance-head h3{ font-family:var(--font-display); font-size:24px; font-weight:500; }
+.att-hint{ font-family:var(--font-mono); font-size:11px; color:var(--muted); }
+.auth-box{ margin-bottom:22px; }
+.auth-row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+.auth-input{ background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:11px 14px; color:var(--ink); font-size:13px; font-family:var(--font-body); transition:border-color .3s var(--ease); }
+.auth-input:focus{ outline:none; border-color:var(--moss); }
+.auth-input::placeholder{ color:var(--muted); }
+.auth-signed-in{ display:flex; align-items:center; gap:14px; font-size:13px; }
+.att-status{ font-family:var(--font-mono); font-size:11.5px; color:var(--muted); margin-top:10px; min-height:1em; }
+.att-list{ display:flex; flex-direction:column; gap:12px; }
+.att-row{ background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:20px 24px; display:grid; grid-template-columns:1.2fr 1.4fr auto; gap:18px; align-items:center; transition:border-color .3s var(--ease); }
+.att-row:hover{ border-color:var(--line-strong); }
+@media (max-width:760px){ .att-row{ grid-template-columns:1fr; text-align:left; } }
+.att-name{ font-family:var(--font-display); font-weight:500; font-size:16px; }
+.att-code{ font-family:var(--font-mono); font-size:11px; color:var(--copper); margin-left:8px; }
+.att-meter .track{ height:5px; border-radius:4px; background:var(--bg-shift); overflow:hidden; border:1px solid var(--line); }
+.att-meter .fill{ height:100%; background:var(--moss); transition:width .5s var(--ease); }
+.att-meter .fill.mid{ background:var(--copper-soft); }
+.att-meter .fill.low{ background:#C0503D; }
+.att-meter .cap{ display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:11px; color:var(--muted); margin-top:6px; }
+.att-buttons{ display:flex; gap:8px; }
+.att-btn{ font-family:var(--font-mono); font-size:11.5px; font-weight:500; padding:8px 14px; border-radius:8px; border:1px solid var(--line); color:var(--ink-soft); background:var(--bg); transition:all .25s var(--ease); }
+.att-btn:hover:not(:disabled){ border-color:var(--line-strong); color:var(--ink); }
+.att-btn:disabled{ opacity:.4; cursor:not-allowed; }
+.att-btn.present{ color:var(--moss-deep); border-color:var(--moss-14); }
+.att-btn.absent{ color:#C0503D; border-color:rgba(192,80,61,0.3); }
 </style>
 </head>
 <body>
@@ -475,6 +540,7 @@ footer{ margin-left:0; padding:150px 0 60px; }
         <a href="#work">Work</a>
         <a href="#experience">Experience</a>
         <a href="#education">Education</a>
+        <a href="#timetable">Timetable</a>
         <a href="#contact">Contact</a>
       </div>
       <a class="nav-cta magnetic" href="mailto:shreyjainengineering@gmail.com">Say hello</a>
@@ -706,6 +772,137 @@ footer{ margin-left:0; padding:150px 0 60px; }
   </div>
 </section>
 
+<section id="timetable">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">07 — VII Sem · CSE · AY 2025-26</div>
+      <h2 class="section-title">Weekly <em>schedule</em>.</h2>
+    </div>
+
+    <div class="tt-scroll reveal">
+      <table class="tt">
+        <thead>
+          <tr>
+            <th>Day</th>
+            <th>8–9</th><th>9–10</th><th>10–10:30</th><th>10:30–11:30</th><th>11:30–12:30</th>
+            <th>12:30–13</th><th>13–14</th><th>14–15</th><th>15–15:30</th><th>15:30–16:30</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="day-cell">MON</td>
+            <td class="free">–</td><td class="free">–</td><td class="break-col">Break</td><td class="free">–</td><td class="free">–</td><td class="break-col">Lunch</td><td class="free">–</td>
+            <td class="has-class">Cloud Computing<span class="code">AB5-212</span></td>
+            <td class="free">–</td>
+            <td class="has-class">HCI<span class="code">AB5-210</span></td>
+          </tr>
+          <tr>
+            <td class="day-cell">TUE</td>
+            <td class="has-class">Math. Modelling<span class="code">AB5-313</span></td>
+            <td class="has-class">Soft Computing<span class="code">AB5-311</span></td>
+            <td class="break-col">Break</td>
+            <td class="has-class">DB &amp; App Security<span class="code">AB5-311</span></td>
+            <td class="has-class">Software Testing<span class="code">AB5-307</span></td>
+            <td class="break-col">Lunch</td>
+            <td class="free">–</td><td class="free">–</td><td class="free">–</td><td class="free">–</td>
+          </tr>
+          <tr>
+            <td class="day-cell">WED</td>
+            <td class="free">–</td><td class="free">–</td><td class="break-col">Break</td><td class="free">–</td><td class="free">–</td><td class="break-col">Lunch</td>
+            <td class="has-class">Math. Modelling<span class="code">AB5-313</span></td>
+            <td class="has-class">DB &amp; App Security<span class="code">AB5-311</span></td>
+            <td class="free">–</td>
+            <td class="has-class">Software Testing<span class="code">AB5-307</span></td>
+          </tr>
+          <tr>
+            <td class="day-cell">THU</td>
+            <td class="has-class">HCI<span class="code">AB5-210</span></td>
+            <td class="has-class">Cloud Computing<span class="code">AB5-212</span></td>
+            <td class="break-col">Break</td>
+            <td class="has-class">Soft Computing<span class="code">AB5-311</span></td>
+            <td class="has-class">Math. Modelling<span class="code">AB5-313</span></td>
+            <td class="break-col">Lunch</td>
+            <td class="free">–</td><td class="free">–</td><td class="free">–</td><td class="free">–</td>
+          </tr>
+          <tr>
+            <td class="day-cell">FRI</td>
+            <td class="free">–</td><td class="free">–</td><td class="break-col">Break</td><td class="free">–</td><td class="free">–</td><td class="break-col">Lunch</td><td class="free">–</td>
+            <td class="has-class">Soft Computing<span class="code">AB5-311</span></td>
+            <td class="free">–</td>
+            <td class="has-class">DB &amp; App Security<span class="code">AB5-311</span></td>
+          </tr>
+          <tr>
+            <td class="day-cell">SAT</td>
+            <td class="has-class">Cloud Computing<span class="code">AB5-212</span></td>
+            <td class="has-class">Software Testing<span class="code">AB5-307</span></td>
+            <td class="break-col">Break</td>
+            <td class="has-class">HCI<span class="code">AB5-210</span></td>
+            <td class="free">–</td><td class="break-col">Lunch</td><td class="free">–</td><td class="free">–</td><td class="free">–</td><td class="free">–</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tt-note reveal">School of Computer Engineering, MIT Manipal — Section: VII BTech (CSE)</p>
+
+    <div class="ia-grid">
+      <div class="ia-card reveal"><div class="ia-tag">IA1</div><div class="ia-range">17 – 29 Aug 2026</div></div>
+      <div class="ia-card reveal"><div class="ia-tag">IA2</div><div class="ia-range">7 – 21 Sep 2026</div></div>
+      <div class="ia-card reveal"><div class="ia-tag">IA3</div><div class="ia-range">19 – 31 Oct 2026</div></div>
+    </div>
+
+    <div class="section-head reveal" style="margin-top:64px; margin-bottom:24px;">
+      <div class="eyebrow">MIT Manipal · AY 2026-27</div>
+      <h2 class="section-title" style="font-size:28px;">Academic <em>calendar</em>.</h2>
+    </div>
+
+    <div class="cal-group reveal">
+      <h4>Odd Semester — Jul – Dec 2026</h4>
+      <div class="cal-row" data-date="2026-07-24"><span class="cal-date">24 Jul</span><span class="cal-tag milestone">Milestone</span><span class="cal-label">I / V / VII Semester B.Tech classes start</span></div>
+      <div class="cal-row" data-date="2026-08-15"><span class="cal-date">15 Aug</span><span class="cal-tag holiday">Holiday</span><span class="cal-label">Independence Day</span></div>
+      <div class="cal-row" data-date="2026-09-05"><span class="cal-date">5 Sep</span><span class="cal-tag holiday">Holiday</span><span class="cal-label">Krishna Janmashtami</span></div>
+      <div class="cal-row" data-date="2026-09-14"><span class="cal-date">14 Sep</span><span class="cal-tag holiday">Holiday</span><span class="cal-label">Vinayaka Chathurthi</span></div>
+      <div class="cal-row" data-date="2026-10-02"><span class="cal-date">2 Oct</span><span class="cal-tag holiday">Holiday</span><span class="cal-label">Gandhi Jayanti</span></div>
+      <div class="cal-row" data-date="2026-10-21"><span class="cal-date">21 Oct</span><span class="cal-tag holiday">Holiday</span><span class="cal-label">Vijayadashami</span></div>
+      <div class="cal-row" data-date="2026-11-09"><span class="cal-date">9 Nov</span><span class="cal-tag holiday">Holiday</span><span class="cal-label">Deepavali</span></div>
+      <div class="cal-row" data-date="2026-11-10"><span class="cal-date">10 Nov</span><span class="cal-tag milestone">Milestone</span><span class="cal-label">Last instructional day</span></div>
+      <div class="cal-row" data-date="2026-12-12"><span class="cal-date">12 Dec</span><span class="cal-tag exam">Exam</span><span class="cal-label">End Semester exams start</span></div>
+      <div class="cal-row" data-date="2026-12-25"><span class="cal-date">25 Dec</span><span class="cal-tag holiday">Holiday</span><span class="cal-label">Christmas</span></div>
+      <div class="cal-row" data-date="2026-12-28"><span class="cal-date">28 Dec</span><span class="cal-tag milestone">Milestone</span><span class="cal-label">Winter labs start</span></div>
+    </div>
+
+    <div class="cal-group reveal">
+      <h4>Even Semester — Jan – May 2027</h4>
+      <div class="cal-row" data-date="2027-01-05"><span class="cal-date">5 Jan</span><span class="cal-tag milestone">Milestone</span><span class="cal-label">Even semester classes / re-registration start</span></div>
+      <div class="cal-row" data-date="2027-01-26"><span class="cal-date">26 Jan</span><span class="cal-tag holiday">Holiday</span><span class="cal-label">Republic Day</span></div>
+      <div class="cal-row" data-date="2027-03-22"><span class="cal-date">22 Mar</span><span class="cal-tag holiday">Holiday</span><span class="cal-label">Holi</span></div>
+      <div class="cal-row" data-date="2027-03-26"><span class="cal-date">26 Mar</span><span class="cal-tag holiday">Holiday</span><span class="cal-label">Good Friday</span></div>
+      <div class="cal-row" data-date="2027-04-24"><span class="cal-date">24 Apr</span><span class="cal-tag exam">Exam</span><span class="cal-label">End Semester exams start</span></div>
+    </div>
+    <p class="cal-foot reveal">Subject to change per MAHE circular. IA1–IA3 windows cover VII-sem CSE internal assessments.</p>
+
+    <div class="attendance-head reveal">
+      <h3>Attendance tracker</h3>
+      <span class="att-hint">Owner-only editing · counts are public</span>
+    </div>
+
+    <div class="auth-box reveal" id="authBox">
+      <div class="auth-row" id="authForm">
+        <input type="email" id="authEmail" class="auth-input" placeholder="Owner email" autocomplete="username">
+        <input type="password" id="authPassword" class="auth-input" placeholder="Password" autocomplete="current-password">
+        <button class="att-btn" id="authSignIn" type="button">Sign in to edit</button>
+      </div>
+      <div class="auth-signed-in" id="authSignedIn" style="display:none;">
+        <span style="font-family:var(--font-mono); font-size:11.5px; color:var(--moss);">● Signed in as owner</span>
+        <button class="att-btn" id="authSignOut" type="button">Sign out</button>
+      </div>
+      <p class="att-status" id="authStatus"></p>
+    </div>
+
+    <div class="att-list reveal" id="attList"></div>
+    <p class="att-status" id="attStatus"></p>
+  </div>
+</section>
+
 <div class="marquee">
   <div class="marquee-track" id="marqueeTrack">
     <span>Formula Manipal</span><span>IE Mechatronics — MANCOMM</span><span>Economics &amp; Finance Society</span><span>AAINA Dramatics</span><span>Greenko GEMOS</span>
@@ -838,7 +1035,7 @@ footer{ margin-left:0; padding:150px 0 60px; }
   /* ---------- Circuit rail progress + labels ---------- */
   var fillPath = document.getElementById('circuitFill');
   var svg = document.getElementById('circuit-svg');
-  var railSections = ['hero','education','work','experience','achievements','skills','contact'];
+  var railSections = ['hero','education','work','experience','achievements','skills','timetable','contact'];
   var labelWrap = document.getElementById('circuit-labels');
   var labelEls = [];
   if(window.innerWidth > 960){
@@ -894,6 +1091,20 @@ footer{ margin-left:0; padding:150px 0 60px; }
   /* ---------- Marquee duplicate for seamless loop ---------- */
   var track = document.getElementById('marqueeTrack');
   track.innerHTML += track.innerHTML;
+
+  /* ---------- Mark next upcoming calendar date ---------- */
+  (function markNextCalDate(){
+    var rows = Array.prototype.slice.call(document.querySelectorAll('.cal-row[data-date]'));
+    var now = new Date();
+    var closest = null;
+    rows.forEach(function(r){
+      var d = new Date(r.getAttribute('data-date') + 'T00:00:00');
+      if(d >= now && (!closest || d < new Date(closest.getAttribute('data-date') + 'T00:00:00'))){
+        closest = r;
+      }
+    });
+    if(closest) closest.classList.add('next');
+  })();
 
   /* ---------- Hero canvas: neural / energy grid network ---------- */
   var canvas = document.getElementById('hero-canvas');
@@ -962,6 +1173,137 @@ footer{ margin-left:0; padding:150px 0 60px; }
   }
   if(!reduced) drawFrame(); else { drawFrame(); }
 })();
+</script>
+
+<!-- ---------- attendance tracker (Firebase Firestore, synced across devices) ---------- -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+  import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDDXINoI4W0AGfUDyFrIQVyY_oa-RkCrro",
+    authDomain: "shrey-8399e.firebaseapp.com",
+    projectId: "shrey-8399e",
+    storageBucket: "shrey-8399e.firebasestorage.app",
+    messagingSenderId: "105976867750",
+    appId: "1:105976867750:web:c3c85bdc3b96f95508bd67",
+    measurementId: "G-QXT6JJL12R"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+  const OWNER_UID = '2NtWmwmwC3g7ZwLFO6dmjhpk8qx1';
+  let isOwner = false;
+
+  const authForm = document.getElementById('authForm');
+  const authSignedIn = document.getElementById('authSignedIn');
+  const authStatus = document.getElementById('authStatus');
+  const authEmail = document.getElementById('authEmail');
+  const authPassword = document.getElementById('authPassword');
+
+  document.getElementById('authSignIn').addEventListener('click', async () => {
+    authStatus.textContent = 'Signing in…';
+    try{
+      await signInWithEmailAndPassword(auth, authEmail.value.trim(), authPassword.value);
+      authPassword.value = '';
+      authStatus.textContent = '';
+    }catch(e){
+      authStatus.textContent = 'Sign-in failed — check email and password.';
+    }
+  });
+
+  document.getElementById('authSignOut').addEventListener('click', async () => {
+    await signOut(auth);
+  });
+
+  onAuthStateChanged(auth, (user) => {
+    isOwner = !!user && user.uid === OWNER_UID;
+    authForm.style.display = isOwner ? 'none' : 'flex';
+    authSignedIn.style.display = isOwner ? 'flex' : 'none';
+    renderAttendance();
+  });
+
+  const SUBJECTS = [
+    {id:'math-modelling', name:'Mathematical Modelling', code:'AB5-313'},
+    {id:'soft-computing', name:'Soft Computing', code:'AB5-311'},
+    {id:'db-app-security', name:'DB & App Security', code:'AB5-311'},
+    {id:'software-testing', name:'Software Testing', code:'AB5-307'},
+    {id:'cloud-computing', name:'Cloud Computing', code:'AB5-212'},
+    {id:'hci', name:'HCI', code:'AB5-210'}
+  ];
+
+  const attList = document.getElementById('attList');
+  const attStatus = document.getElementById('attStatus');
+  const attState = {};
+
+  async function loadAttendance(){
+    attStatus.textContent = 'Loading saved attendance…';
+    try{
+      for(const s of SUBJECTS){
+        const snap = await getDoc(doc(db, 'attendance', s.id));
+        attState[s.id] = snap.exists() ? snap.data() : {attended:0, total:0};
+      }
+      attStatus.textContent = '';
+    }catch(e){
+      SUBJECTS.forEach(s => { if(!attState[s.id]) attState[s.id] = {attended:0, total:0}; });
+      attStatus.textContent = 'Could not reach the database — showing zeros. Check your connection and reload.';
+    }
+    renderAttendance();
+  }
+
+  async function saveAttendance(id){
+    try{
+      await setDoc(doc(db, 'attendance', id), attState[id]);
+      attStatus.textContent = '';
+    }catch(e){
+      attStatus.textContent = 'Could not sync that tap — check your connection.';
+    }
+  }
+
+  function renderAttendance(){
+    attList.innerHTML = '';
+    SUBJECTS.forEach(s => {
+      const st = attState[s.id] || {attended:0, total:0};
+      const pct = st.total > 0 ? Math.round((st.attended / st.total) * 100) : 0;
+      const row = document.createElement('div');
+      row.className = 'att-row';
+      row.innerHTML = `
+        <div>
+          <span class="att-name">${s.name}</span>
+          <span class="att-code">${s.code}</span>
+        </div>
+        <div class="att-meter">
+          <div class="track"><div class="fill ${pct < 65 ? 'low' : pct < 75 ? 'mid' : ''}" style="width:${pct}%"></div></div>
+          <div class="cap"><span>${st.attended}/${st.total} held</span><span>${pct}%</span></div>
+        </div>
+        <div class="att-buttons">
+          <button class="att-btn present" data-id="${s.id}" data-action="present" ${isOwner ? '' : 'disabled title="Sign in as owner to edit"'}>Present</button>
+          <button class="att-btn absent" data-id="${s.id}" data-action="absent" ${isOwner ? '' : 'disabled title="Sign in as owner to edit"'}>Absent</button>
+          <button class="att-btn" data-id="${s.id}" data-action="reset" ${isOwner ? '' : 'disabled title="Sign in as owner to edit"'} aria-label="Reset ${s.name} attendance">Reset</button>
+        </div>
+      `;
+      attList.appendChild(row);
+    });
+  }
+
+  attList.addEventListener('click', async (e) => {
+    const btn = e.target.closest('.att-btn');
+    if(!btn || btn.disabled) return;
+    if(!isOwner){ attStatus.textContent = 'Sign in as owner to edit attendance.'; return; }
+    const id = btn.dataset.id;
+    const action = btn.dataset.action;
+    const st = attState[id] || {attended:0, total:0};
+    if(action === 'present'){ st.attended += 1; st.total += 1; }
+    else if(action === 'absent'){ st.total += 1; }
+    else if(action === 'reset'){ st.attended = 0; st.total = 0; }
+    attState[id] = st;
+    renderAttendance();
+    await saveAttendance(id);
+  });
+
+  loadAttendance();
 </script>
 </body>
 </html>
